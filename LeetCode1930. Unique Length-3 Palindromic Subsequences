@@ -1,0 +1,30 @@
+//Given a string s, return the number of unique palindromes of length three that are a subsequence of s.
+//Note that even if there are multiple ways to obtain the same subsequence, it is still only counted once.
+//A palindrome is a string that reads the same forwards and backwards.
+//A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
+
+class Solution {
+    public int countPalindromicSubsequence(String s) {
+        HashMap<Character, Integer> fMap = new HashMap<>();
+        HashMap<Character, Integer> lMap = new HashMap<>();
+        int count = 0;
+
+        int n = s.length();
+        for(int  i = 0; i < n; i++){
+            char ch = s.charAt(i);
+            if(!fMap.containsKey(ch))   fMap.put(ch,i);
+            else    lMap.put(ch,i);
+        }
+
+        for(Character key : fMap.keySet()){
+            if(lMap.containsKey(key)){
+                HashSet<Character> set = new HashSet<>();
+                for(int i = fMap.get(key)+1; i < lMap.get(key); i++){
+                    set.add(s.charAt(i));
+                }
+                count += set.size();
+            }
+        }
+        return count;
+    }
+}
