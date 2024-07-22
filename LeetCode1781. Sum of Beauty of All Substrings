@@ -1,0 +1,32 @@
+//The beauty of a string is the difference in frequencies between the most frequent and least frequent characters.
+
+//For example, the beauty of "abaacc" is 3 - 1 = 2.
+//Given a string s, return the sum of beauty of all of its substrings.
+
+class Solution {
+    public int beautySum(String s) {
+        int beauty = 0;
+        int n = s.length();
+        for(int i = 0; i < n; i++){
+            HashMap<Character, Integer> map = new HashMap<>();
+            for(int j = i; j < n; j++){
+                char temp = s.charAt(j);
+                if(map.containsKey(temp)){
+                    int freq = map.get(temp);
+                    map.put(temp,freq+1);
+                }
+                else    map.put(temp,1);
+                
+                int min = Integer.MAX_VALUE;
+                int max = Integer.MIN_VALUE;
+                for(Character key : map.keySet()){
+                min = Math.min(min,map.get(key));
+                max = Math.max(max,map.get(key));
+            }
+            beauty += (max-min);
+            }
+            
+        }
+        return beauty;
+    }
+}
