@@ -1,0 +1,21 @@
+//Given an unsorted array arr[] of size n. Rotate the array to the left (counter-clockwise direction) by d steps, where d is a positive integer. 
+
+class Solution {
+    static void rotateArr(int arr[], int d, int n) {
+        d = d % n;
+        
+        reverse(arr, 0, n-1);
+        reverse(arr, 0, n-d-1);
+        reverse(arr, n-d, n-1);
+    }
+    
+    public static void reverse(int[] arr, int start, int end){
+        while(start <= end){
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}
