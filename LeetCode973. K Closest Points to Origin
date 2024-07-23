@@ -1,0 +1,33 @@
+class Solution {
+    class Triplet implements Comparable<Triplet>{
+        int dist, x, y;
+        Triplet(int dist, int x, int y){
+            this.dist = dist;
+            this.x = x;
+            this.y = y;
+        }
+
+        public int compareTo(Triplet t){
+            return this.dist - t.dist;
+        }
+    }
+    public int[][] kClosest(int[][] points, int k) {
+        PriorityQueue<Triplet> pq = new PriorityQueue<>(Collections.reverseOrder());
+        int n = points.length;
+        for(int i = 0; i < n; i++){
+            int x = points[i][0], y = points[i][1];
+            int dist = x*x + y*y;
+            pq.add(new Triplet(dist,x,y));
+            if(pq.size() > k)   pq.remove();
+        }
+
+
+        int[][] res = new int[k][2];
+        for(int i = 0; i < k; i++){
+            Triplet temp = pq.remove();
+            res[i][0] = temp.x;
+            res[i][1] = temp.y;
+        }
+        return res;
+    }
+}
