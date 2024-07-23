@@ -1,0 +1,20 @@
+class Solution
+{
+    //Function to return the minimum cost of connecting the ropes.
+    long minCost(long arr[], int n) 
+    {
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+        long cost = 0;
+        for(long ele : arr){
+            pq.add(ele);
+        }
+        
+        while(pq.size() > 1){
+            long x = pq.remove();
+            long y = pq.remove();
+            cost += (x+y);
+            pq.add(x+y);
+        }
+        return cost;
+    }
+}
