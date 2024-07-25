@@ -1,0 +1,156 @@
+package Heaps;
+
+class MaxHeap{
+    private int[] arr;
+    int size;
+    MaxHeap(int size){
+        arr = new int[size];
+        size = 0;
+    }
+
+    public void add(int num) throws Exception{
+        if(size == arr.length)  throw new Exception("Heap is Full");
+        arr[size++] = num;
+        upHeapify(size-1);
+    }
+
+
+    public int peek() throws Exception{
+        if(size == 0)   throw new Exception("Heap is Empty");
+        return arr[0];
+    }
+
+    public int remove() throws Exception{
+        if(size == 0) throw new Exception("Heap is Empty");
+        int i = arr[0];
+        swap(0,size-1);
+        size--;
+        downHeapify(0);
+        return i;
+    }
+
+    public int size(){
+        return size;
+    }
+
+    private void upHeapify(int i) {
+        int parent = (i-1)/2;
+        while(arr[parent] < arr[i]){
+            swap(parent, i);
+            i = parent;
+            parent = (i-1)/2;
+        }
+    }
+
+    private void downHeapify(int i) {
+        int lc = 2*i + 1;
+        int rc = 2*i + 2;
+        int maxdx = i;
+        if(lc < size && arr[lc] > arr[maxdx])   maxdx = lc;
+        if(rc < size && arr[rc] > arr[maxdx])   maxdx = rc;
+        if(maxdx == i)   return;
+        swap(i,maxdx);
+        downHeapify(maxdx);
+    }
+
+    private void swap(int num1, int num2) {
+        int temp = arr[num1];
+        arr[num1] = arr[num2];
+        arr[num2] = temp;
+    }
+}
+class MinHeap{
+    private int[] arr;
+    private int size;
+
+    MinHeap(int size){
+        arr = new int[size];
+        size = 0;
+    }
+
+    public void add(int num) throws Exception{
+        if(size == arr.length)  throw new Exception("Heap is Full");
+        arr[size++] = num;
+        upMinHeapify(size-1);
+    }
+
+    public int peek() throws Exception{
+        if(size == 0)   throw new Exception("Heap is Empty");
+        return arr[0];
+    }
+
+    public int remove() throws Exception{
+        if(size == 0)   throw new Exception("Heap is Empty");
+        int peek = arr[0];
+        swap(0, size-1);
+        size--;
+        downMinHeapify(0);
+        return peek;
+    }
+
+    private void downMinHeapify(int i) {
+        int lc = 2*i + 1;
+        int rc = 2*i + 2;
+        int mindx = i;
+        if(lc < size && arr[lc] < arr[mindx])   mindx = lc;
+        if(rc < size && arr[rc] < arr[mindx])   mindx = rc;
+        if(mindx == i)  return;
+        swap(mindx,i);
+        downMinHeapify(mindx);
+    }
+
+    public int size(){
+        return size;
+    }
+
+    public void upMinHeapify(int idx){
+        int parent = (idx - 1)/2;
+        while(arr[parent] > arr[idx]){ 
+            swap(parent, idx);
+            idx = parent;
+            parent = (idx - 1)/2;   
+        }
+    }
+
+    private void swap(int num1, int num2) {
+        int temp = arr[num1];
+        arr[num1] = arr[num2];
+        arr[num2] = temp;
+    }
+}
+
+public class Implementation {
+    public static void main(String[] args) throws Exception{
+        // MinHeap heap = new MinHeap(10);
+        // heap.add(10);
+        // System.out.println("Top: " + heap.peek() + " " + "Size: " + heap.size());
+        // heap.add(4);
+        // System.out.println("Top: " + heap.peek() + " " + "Size: " + heap.size());
+        // heap.add(12);
+        // System.out.println("Top: " + heap.peek() + " " + "Size: " + heap.size());
+        // heap.add(0);
+        // System.out.println("Top: " + heap.peek() + " " + "Size: " + heap.size());
+        // heap.add(-1);
+        // System.out.println("Top: " + heap.peek() + " " + "Size: " + heap.size());
+        // heap.remove();
+        // System.out.println("Top: " + heap.peek() + " " + "Size: " + heap.size());
+        // heap.remove();
+        // System.out.println("Top: " + heap.peek() + " " + "Size: " + heap.size());
+
+        MaxHeap mHeap = new MaxHeap(10);
+        mHeap.add(10);
+        System.out.println("Top: " + mHeap.peek() + " " + "Size: " + mHeap.size());
+        mHeap.add(4);
+        System.out.println("Top: " + mHeap.peek() + " " + "Size: " + mHeap.size());
+        mHeap.add(12);
+        System.out.println("Top: " + mHeap.peek() + " " + "Size: " + mHeap.size());
+        mHeap.add(0);
+        System.out.println("Top: " + mHeap.peek() + " " + "Size: " + mHeap.size());
+        mHeap.add(-1);
+        System.out.println("Top: " + mHeap.peek() + " " + "Size: " + mHeap.size());
+        mHeap.remove();
+        System.out.println("Top: " + mHeap.peek() + " " + "Size: " + mHeap.size());
+        mHeap.remove();
+        System.out.println("Top: " + mHeap.peek() + " " + "Size: " + mHeap.size());
+    }
+}
