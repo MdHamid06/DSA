@@ -1,0 +1,28 @@
+class Solution {
+    boolean isHeap(Node root) {
+        int n = numNodes(root);
+        return followHOP(root) && isCBT(root, 0, n);
+    }
+    
+    public static boolean followHOP(Node root){
+        if(root == null)    return true;
+        if(root.left != null){
+            if(root.left.data > root.data) return false;
+        }
+        if(root.right != null){
+            if(root.right.data > root.data) return false;
+        }
+        return followHOP(root.left) && followHOP(root.right);
+    }
+    
+    public static boolean isCBT(Node root, int i, Integer n){
+        if(root == null)    return true;
+        if(i >= n)  return false;
+        return isCBT(root.left,2*i+1, n) && isCBT(root.right,2*i+2, n);
+    }
+    
+   public int numNodes(Node root) {
+        if (root == null) return 0;  
+        return 1 + numNodes(root.left) + numNodes(root.right);
+    }
+}
