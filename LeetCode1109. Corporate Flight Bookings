@@ -1,0 +1,18 @@
+class Solution {
+    public int[] corpFlightBookings(int[][] booking, int n) {
+        int[] res = new int[n];
+
+        for(int i = 0; i < booking.length; i++){
+            int first = booking[i][0];
+            int last = booking[i][1];
+            int seats = booking[i][2];
+
+            res[first-1] += seats;
+            if(last < n)    res[last] -= seats;
+        }
+        for(int i = 1; i < n; i++){
+            res[i] += res[i-1];
+        }
+        return res;
+    }
+}
