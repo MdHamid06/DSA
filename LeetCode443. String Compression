@@ -1,0 +1,20 @@
+class Solution {
+    public int compress(char[] chars) {
+        int n = chars.length;
+        int i = 0, j = 0;
+        int k = 0;
+        while(j < n){
+            while(j<n  && chars[i] == chars[j]) j++;
+            chars[k++] = chars[i];
+            String str = "";
+            if(j-i > 1){
+                str += (j-i);
+                for(char ch : str.toCharArray()){
+                    chars[k++] = ch;
+                }
+            }
+            i = j;
+        }
+        return k;
+    }
+}
