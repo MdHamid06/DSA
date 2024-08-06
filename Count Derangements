@@ -1,15 +1,31 @@
+package DynamicProgramming;
+
+import java.util.Scanner;
+
 public class CountDerangements {
+    static int[] memo;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-
+        // memo = new int[n+1];
         System.out.println(count(n));
     }
 
-    private static int count(int n) {
-        if(n <= 1)  return 0;
-        if(n == 2)  return 1;
-        return (n-1) * (count(n-1) + count(n-2));
-    }
+    // Recursion + Memoisation
+    // private static int count(int n) {
+    //     if(n <= 1)  return 0;
+    //     if(n == 2)  return 1;
+    //     if(memo[n] != 0)   return memo[n];
+    //     return memo[n] = (n-1) * (count(n-1) + count(n-2));
+    // }
 
+    //Tabular
+    private static int count(int n){
+        int[] dp = new int[n+1];
+        dp[0] = 0;  dp[1] = 0;  dp[2] = 1;
+        for(int i = 3; i <= n; i++){
+            dp[i] = (i-1) * (dp[i-1] + dp[i-2]);
+        }
+        return dp[n];
+    }
 }
