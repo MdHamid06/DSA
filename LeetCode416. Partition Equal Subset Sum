@@ -1,0 +1,30 @@
+class Solution {
+    public boolean canPartition(int[] nums) {
+       int sum = 0;
+       for(int ele : nums)  sum += ele;
+       if(sum%2 != 0)   return false;
+       int target = sum / 2;
+       int[][] memo = new int[nums.length][target+1];
+       for(int i =0 ; i< memo.length; i++)  Arrays.fill(memo[i], -1);
+       return helper(nums,0,target, memo);
+    }
+
+    private boolean helper(int[] nums, int i, int target, int[][] memo){
+        if(i == nums.length){
+            if(target == 0) return true;    return false;
+        }
+        if(memo[i][target] != -1)   return (memo[i][target] == 1);
+        boolean ans = false;
+        boolean skip = helper(nums,i+1,target,memo);
+        if(nums[i] > target){
+            if(skip)    memo[i][target] = 1;
+            else    memo[i][target] = 0;
+            return skip;
+            }
+        boolean pick = helper(nums,i+1,target-nums[i],memo);
+        if(skip || pick)    memo[i][target] = 1;
+        else    memo[i][target] = 0;
+
+        return skip || pick;
+    }
+}
