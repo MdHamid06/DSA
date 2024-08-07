@@ -1,0 +1,22 @@
+//Recursion + Memoisation
+class Solution 
+{ 
+    //Function to return max value that can be put in knapsack of capacity W.
+    static int knapSack(int C, int wt[], int val[], int n) 
+    { 
+        int[][] memo = new int[n][C+1];
+        for(int i = 0; i < memo.length; i++){
+            Arrays.fill(memo[i], -1);
+        }
+        return profit(C,wt,val,n,0,memo);
+    } 
+    
+    public static int profit(int C, int wt[], int val[], int n, int i, int[][]memo){
+        if(i >= n)  return 0;
+        if(memo[i][C] != -1)   return memo[i][C];
+        int skip = profit(C,wt,val,n,i+1, memo);
+        if(wt[i] > C)   return memo[i][C] = skip;
+        int pick = val[i] + profit(C-wt[i],wt,val,n,i+1, memo);
+        return memo[i][C] = Math.max(skip , pick);
+    }
+}
