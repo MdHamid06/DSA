@@ -1,0 +1,44 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int[] res = new int[2];
+
+        int lb = lowerBound(nums,target);
+        if(lb == -1){
+            res[0] = -1;    
+            res[1] = -1;
+            return res;
+        }
+        int ub = upperBound(nums,target);
+        res[0] = lb;    res[1] = ub;
+        return res;
+    }
+
+    private int lowerBound(int[] nums, int target){
+        int lb = nums.length;
+        int low = 0, high = nums.length-1;
+        while(low <= high){
+            int mid = low + (high-low)/2;
+            if(nums[mid] >= target){
+                lb = mid;
+                high = mid - 1;
+            }
+            else    low = mid + 1;
+        }
+        if(lb < nums.length && nums[lb] == target)  return lb;
+        return -1;
+    }
+
+    private int upperBound(int[] nums, int target){
+        int ub = nums.length;
+        int low = 0, high = nums.length-1;
+        while(low <= high){
+            int mid = low + (high-low)/2;
+            if(nums[mid] > target){
+                ub = mid;
+                high = mid - 1;
+            }
+            else    low = mid + 1;
+        }
+        return ub-1;
+    }
+}
