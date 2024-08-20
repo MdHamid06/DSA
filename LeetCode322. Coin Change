@@ -1,0 +1,43 @@
+//Recursion  + Memoisation
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        long[][] memo = new long[n][amount+1];
+        for(int i = 0; i < n; i++)  Arrays.fill(memo[i],-1);
+        int res = (int)totalCoins(coins, amount, n-1, memo);
+        return (res == Integer.MAX_VALUE) ? -1 : res;
+    }
+
+    public long totalCoins(int[] coins, int amount, int i, long[][] memo) {
+        if(i < 0){
+            if(amount == 0) return 0;   
+            else return Integer.MAX_VALUE;
+        }
+        if(memo[i][amount] != -1)   return memo[i][amount];
+        long skip = totalCoins(coins,amount, i-1, memo);
+        if(amount - coins[i] < 0) return memo[i][amount] = skip;
+        long pick = 1 + totalCoins(coins,amount-coins[i], i, memo);
+        return memo[i][amount] = Math.min(pick,skip);
+    }
+}
+
+
+// Tabulation
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        long[][] dp = new long[n][amount+1];
+        for(int i = 0; i < n; i++){
+            for(int j = 1; j <= amount; j++){
+                long skip = (i == 0) ? Integer.MAX_VALUE : dp[i-1][j];
+                if(j - coins[i] < 0) dp[i][j] = skip;
+                else{
+                    long pick = 1 + dp[i][j - coins[i]];
+                    dp[i][j] = Math.min(pick,skip); 
+                }       
+            }
+        }
+        int res = (int)dp[n-1][amount];
+        return (res == Integer.MAX_VALUE) ? -1 : res;
+    }
+}
