@@ -1,0 +1,19 @@
+//Recursion + Memoisation
+
+class Solution {
+    public int minInsertions(String s) {
+        int[][] memo = new int[s.length()][s.length()];
+        for(int i = 0; i < s.length(); i++)  Arrays.fill(memo[i],-1);
+        return count(s,0,s.length()-1, memo);
+    }
+
+    public static int count(String s, int i, int j, int[][] memo){
+        if(i > j)   return 0;
+        if(memo[i][j] != -1)   return memo[i][j];
+        if(s.charAt(i) == s.charAt(j))  return memo[i][j] = count(s,i+1,j-1, memo);
+        else    return memo[i][j] = 1 + Math.min(count(s,i+1,j,memo), count(s,i,j-1,memo));
+    }
+}
+
+//Tabulation
+
