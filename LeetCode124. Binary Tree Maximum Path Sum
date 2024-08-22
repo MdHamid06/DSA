@@ -1,0 +1,17 @@
+class Solution {
+    static int maxSum;
+    public int maxPathSum(TreeNode root) {
+        maxSum = Integer.MIN_VALUE;
+        lineSum(root);
+        return maxSum;
+    }
+
+    public int lineSum(TreeNode root){
+        if(root == null)    return 0;
+        int leftSum = lineSum(root.left);
+        int rightSum = lineSum(root.right);
+        int pathSum = root.val + ((leftSum > 0) ? leftSum : 0) + ((rightSum > 0) ? rightSum : 0);
+        maxSum = Math.max(pathSum, maxSum);
+        return root.val + Math.max(0,Math.max(leftSum, rightSum));
+    }
+}
