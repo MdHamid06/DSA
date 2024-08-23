@@ -1,0 +1,35 @@
+class Solution {
+    class Envelop implements Comparable<Envelop>{
+        int w;
+        int h;
+        Envelop(int w, int h){
+            this.w = w;
+            this.h = h;
+        }
+
+        public int compareTo(Envelop e){
+            if(this.w == e.w)   return e.h - this.h;
+            return this.w - e.w;
+        }
+    }
+    public int maxEnvelopes(int[][] envelopes){
+        int n = envelopes.length;
+        Envelop[] obj = new Envelop[n];
+        for(int i = 0; i < n; i++){
+            int w = envelopes[i][0];
+            int h = envelopes[i][1];
+            obj[i] = new Envelop(w,h);
+        }
+        Arrays.sort(obj);
+        int[] dp = new int[n];
+        int max = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = i-1; j >= 0; j--){
+                if(obj[j].h < obj[i].h) dp[i] = Math.max(dp[j],dp[i]);
+            }
+            dp[i]++;
+            max = Math.max(dp[i],max);
+        }
+        return max;
+    }
+}
