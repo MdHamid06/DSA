@@ -1,0 +1,16 @@
+class Solution{
+    static int matrixMultiplication(int N, int arr[])
+    {
+        return cost(1,N-1,arr,Integer.MAX_VALUE);
+    }
+    
+    public static int cost(int i, int j, int[] arr, int minCost){
+        if(i == j)  return 0;
+        for(int k = i; k < j; k++){
+            int temp = arr[i-1] * arr[k] * arr[j];
+            int c = cost(i,k,arr, minCost) + cost(k+1,j,arr, minCost) + temp;
+            minCost = Math.min(minCost,c);
+        }
+        return minCost;
+    }
+}
