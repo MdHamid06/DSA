@@ -1,0 +1,24 @@
+class Solution {
+    public static int smallestDivisor(int[] arr, int K) {
+        int n = arr.length;
+        int mx = -1;
+        for(int i = 0; i < n; i++)  mx = Math.max(mx,arr[i]);
+        int low = 1, high = mx;
+        int minDiv = 0;
+        while(low <= high){
+            int mid = low + (high-low)/2;
+            int sum = 0;
+            for(int i = 0; i < n; i++){
+                sum += (arr[i]%mid == 0) ? arr[i]/mid : arr[i]/mid + 1;
+            }
+            if(sum <= K) {
+                minDiv = mid;
+                high = mid - 1;
+            }
+            else{
+                low = mid + 1;
+            }
+        }
+        return minDiv;
+    }
+}
