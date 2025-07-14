@@ -1,0 +1,37 @@
+Just add nodes one after another and store a carry to be used for the next iteration, and when any one list comes to end then just keep on adding carry the val in another list.
+
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode sum = new ListNode();
+        ListNode head = sum;
+        int carry = 0;
+        while(l1 != null && l2 != null){            
+            int add = (l1.val + l2.val + carry);
+            ListNode newNode = new ListNode(add % 10);
+            sum.next = newNode;
+            sum = sum.next;
+            carry = add / 10;
+            l1 = l1.next;
+            l2 = l2.next;  
+        }
+        while(l1 != null){
+            ListNode newNode = new ListNode((l1.val + carry) % 10);
+            sum.next = newNode;
+            sum = sum.next;
+            carry = (l1.val + carry) / 10;
+            l1 = l1.next;
+        }
+        while(l2 != null){
+            ListNode newNode = new ListNode((l2.val + carry) % 10);
+            sum.next = newNode;
+            sum = sum.next;
+            carry = (l2.val + carry) / 10;
+            l2 = l2.next;
+        }
+        if(carry > 0){
+            ListNode newNode = new ListNode(carry);
+            sum.next = newNode;
+        }
+        return head.next;
+    }
+}
