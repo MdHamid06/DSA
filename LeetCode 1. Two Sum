@@ -1,0 +1,16 @@
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++)    {
+            int compliment = target - nums[i];
+            if(map.containsKey(compliment))
+                return new int[]{i, map.get(compliment)};
+            
+            map.put(nums[i], i);
+        }
+        return new int[] {0,0};
+    }
+}
+
+Create a HashMap of value and idx and simultoneously check for its compliment if both found no need to trace the entire array and return the current index and compliment's index.
